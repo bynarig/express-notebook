@@ -9,10 +9,21 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import fs from 'fs';
 import path from 'path';
+import { DB, connect } from './utils/connectMongoose.js';
 
 const app = express();
 dotenv.config();
+const { models } = DB;
 const PORT = process.env.PORT || 8000;
+
+// middlewares
+app.use((req, res, next) => {
+    // now in every request would be our models, we don't need to import everywhere
+    //@ts-ignore
+    req.models = models;
+    next();
+});
+connect();
 
 app.use(cookieParser());
 app.use(express.json());

@@ -1,10 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
+import UserService from '../service/user.service.js';
 
 export class UserController {
     //           --------REGISTER-------
-    static register(req: Request, res: Response, next: NextFunction) {
+    static async register(req: Request, res: Response, next: NextFunction) {
         try {
-            const { name, password } = req.body;
+            const { email, password, username } = req.body;
+            await UserService.register(email, password, username);
             res.status(200).json({
                 status: 200,
                 message: 'Code sent to user email',

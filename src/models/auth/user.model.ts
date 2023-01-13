@@ -9,6 +9,11 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+    },
 });
 
-export default model('Token', UserSchema);
+export default model('User', UserSchema);
